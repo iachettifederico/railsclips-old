@@ -5,11 +5,16 @@
     %th Email
     %th First name
     %th Last name
-  - @users.each do |user|
+    %th Posts
+  - @users.includes(:posts).each do |user|
     %tr
       %td= user.email
       %td= user.first_name
       %td= user.last_name
+      %td
+        %ul
+          - user.posts.each do |post|
+            %li= link_to post.title, post_path(post)
       %td
         = link_to 'Show', user, class: "btn btn-primary"
         = link_to 'Edit', edit_user_path(user), class: "btn btn-primary"

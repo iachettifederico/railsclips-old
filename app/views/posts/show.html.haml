@@ -1,15 +1,10 @@
-%p#notice= notice
+- Mystique.present(@post, context: self) do |post|
+  %h1= post.title
+  %h2
+    %small by
+    %span= post.user
 
-%p
-  %b Title:
-  = @post.title
-%p
-  %b Content:
-  = @post.content
-%p
-  %b User:
-  = @post.user
+  .well
+    = post.content
 
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', posts_path
+  Published on #{post.created_at}
