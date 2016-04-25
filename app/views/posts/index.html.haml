@@ -9,7 +9,7 @@
   - @posts.each.each do |post|
     %tr
       %td= post.title
-      %td= post.user
+      %td= post.user.email
       %td
         = link_to 'Show', post, class: "btn btn-primary"
         = link_to 'Edit', edit_post_path(post), class: "btn btn-primary"
