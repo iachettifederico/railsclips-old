@@ -3,4 +3,16 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+# Resque tasks
+require 'resque/tasks'
+
+namespace :resque do
+  task :setup => :environment do
+    require 'resque'
+
+    # you probably already have this somewhere
+    Resque.redis = 'localhost:6379'
+  end
+end
+
 Rails.application.load_tasks

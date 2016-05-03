@@ -6,7 +6,7 @@
     %th Title
     %th Content
     %th Actions
-  - @posts.each.each do |post|
+  - @posts.includes(:user).each do |post|
     %tr
       %td= post.user
       %td= post.title
