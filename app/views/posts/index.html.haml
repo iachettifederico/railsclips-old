@@ -12,8 +12,11 @@
       %td= post.title
       %td #{post.content[0..30]} ...
       %td
-        = link_to 'Show', post, class: "btn btn-primary"
-        = link_to 'Edit', edit_post_path(post), class: "btn btn-primary"
-        = link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
-
-= link_to 'New Post', new_post_path, class: "btn btn-primary"
+        = link_to 'Show', post_path(post), class: "btn btn-primary"
+        - if authorizator.can?(:modify_post, post: post)
+          = link_to 'Edit', edit_post_path(post), class: "btn btn-primary"
+        - if authorizator.can?(:create_post)
+          = link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"
+          
+- if authorizator.can?(:create_post)
+  = link_to 'New Post', new_post_path, class: "btn btn-primary"

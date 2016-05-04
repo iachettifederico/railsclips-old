@@ -9,44 +9,42 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
-  end
-
-  def edit
-  end
-
-  def create
-    @post = Post.new(post_params)
-
-    respond_to do |format|
-      if @post.save
-        Resque.enqueue(Notify, @post.id)
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    allow!(authorizator.can?(:create_post)) do
+      @post = Post.new
     end
   end
 
-  def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
+  def create
+    allow!(authorizator.can?(:create_post)) do
+      @post = Post.new(post_params)
+
+      if @post.save
+        Resque.enqueue(Notify, @post.id)
+        redirect_to @post, notice: 'Post was successfully created.'
       else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
 
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+    allow!(authorizator.can?(:create_post)) do
+      @post.destroy
+      redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    end
+  end
+
+  def edit
+    allow!(authorizator.can?(:modify_post))
+  end
+
+  def update
+    allow!(authorizator.can?(:modify_post)) do
+      if @post.update(post_params)
+        redirect_to @post, notice: 'Post was successfully updated.'
+      else
+        render :edit
+      end
     end
   end
 
