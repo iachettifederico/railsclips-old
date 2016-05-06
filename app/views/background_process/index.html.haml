@@ -1,0 +1,9 @@
+%h1 Our background action
+
+= form_tag background_process_path, remote: true do
+  = text_field_tag :message
+  %select(name="msg_type")
+    - message_types.each do |key, value|
+      %option(value="#{key}")= value.capitalize
+  %br
+  = submit_tag 'Run Background Process', class: "btn btn-primary"
