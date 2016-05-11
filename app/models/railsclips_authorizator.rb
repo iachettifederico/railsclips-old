@@ -8,6 +8,11 @@ class RailsclipsAuthorizator < YouShallNotPass::Authorizator
        logged_in? && (user.admin? || user.editor? || (post && post.user == user))
      }
     }
+    self
+  end
+
+  def fetch(*)
+    true
   end
 
   def logged_in?

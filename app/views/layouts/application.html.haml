@@ -15,5 +15,6 @@
               %li.navbar-text Logged in as #{current_user.email}
             - else
               %li.navbar-text Not logged in
-    = flash_messages
-    = yield
+    .container
+      = flash_messages
+      = yield

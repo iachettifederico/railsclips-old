@@ -27,5 +27,14 @@ EOF
 
 
 all_content.each_line do |content|
-  Post.create!(user: users.sample, title: content.split(" ").take(rand(3..5)).join(" "), content: content)
+  post_attrs = {
+                user: users.sample,
+                title: content.split(" ").take(rand(3..5)).join(" "),
+                content: content,
+                likes: rand*100,
+               }
+  post = Post.create!(post_attrs)
+  images = Dir.entries(Pathname( "./public/images").expand_path).reject { |d| d =~ /\A\.+\Z/}.map {|d| "/images/" + d}
+  post.featured_image = FeaturedImage.create!(url: images.sample)
+
 end

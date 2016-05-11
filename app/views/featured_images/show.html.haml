@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Url:
+  = @featured_image.url
+%p
+  %b Post:
+  = @featured_image.post
+
+= link_to 'Edit', edit_featured_image_path(@featured_image)
+\|
+= link_to 'Back', featured_images_path

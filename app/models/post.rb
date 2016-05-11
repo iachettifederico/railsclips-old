@@ -9,10 +9,12 @@
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  workflow_state :string
+#  likes          :integer
 #
 
 class Post < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, touch: true
+  has_one :featured_image
   include Workflow
 
   workflow do
@@ -35,5 +37,15 @@ class Post < ActiveRecord::Base
 
   def inspect
     "<Post title: #{title} state: #{workflow_state.inspect}>"
+  end
+
+  def likes
+    sleep(0.1)
+    #puts "TAKING SOME TIME!"
+    read_attribute(:likes)
+  end
+
+  def like
+    update_attributes(likes: likes + 1)
   end
 end

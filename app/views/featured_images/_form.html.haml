@@ -1,0 +1,9 @@
+= simple_form_for(@featured_image) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :url
+    = f.association :post
+
+  .form-actions
+    = f.button :submit

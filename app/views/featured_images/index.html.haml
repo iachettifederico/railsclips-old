@@ -1,0 +1,23 @@
+%h1 Listing featured_images
+
+%table
+  %thead
+    %tr
+      %th Url
+      %th Post
+      %th
+      %th
+      %th
+
+  %tbody
+    - @featured_images.each do |featured_image|
+      %tr
+        %td= featured_image.url
+        %td= featured_image.post.title
+        %td= link_to 'Show', featured_image
+        %td= link_to 'Edit', edit_featured_image_path(featured_image)
+        %td= link_to 'Destroy', featured_image, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Featured image', new_featured_image_path

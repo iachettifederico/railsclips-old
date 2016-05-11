@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :like]
 
   def index
     @posts = Post.all
@@ -48,6 +48,11 @@ class PostsController < ApplicationController
     end
   end
 
+  def like
+    @post.like
+    redirect_to :back, notice: "Liked!"
+  end
+
   private
   def set_post
     @post = Post.find(params[:id])
@@ -57,5 +62,8 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content, :user_id)
   end
 
-
+  def most_popular_posts
+    @most_popular_posts ||= Post.order("likes DESC").take(10)
+  end
+  helper_method :most_popular_posts
 end
